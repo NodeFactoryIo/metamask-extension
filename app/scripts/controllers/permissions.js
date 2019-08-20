@@ -80,9 +80,9 @@ class PermissionsController {
    * Returns the accounts that should be exposed for the given origin domain,
    * if any. This method exists for when a trusted context needs to know
    * which accounts are exposed to a given domain.
-   * 
+   *
    * Do not use in untrusted contexts; just send an RPC request.
-   * 
+   *
    * @param {string} origin
    */
   getAccounts (origin) {
