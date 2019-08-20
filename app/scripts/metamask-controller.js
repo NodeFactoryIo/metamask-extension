@@ -319,7 +319,7 @@ module.exports = class MetamaskController extends EventEmitter {
         ) {
           return await this.permissionsController.getAccounts(origin)
         }
-        return []
+        return [] // changing this is a breaking change
       },
       // tx signing
       processTransaction: this.newUnapprovedTransaction.bind(this),
@@ -509,6 +509,7 @@ module.exports = class MetamaskController extends EventEmitter {
       rejectPermissionsRequest: nodeify(this.permissionsController.rejectPermissionsRequest, this.permissionsController),
       removePermissionsFor: this.permissionsController.removePermissionsFor.bind(this.permissionsController),
       clearPermissions: this.permissionsController.clearPermissions.bind(this.permissionsController),
+      getApprovedAccounts: nodeify(this.permissionsController.getAccounts.bind(this.permissionsController)),
     }
   }
 

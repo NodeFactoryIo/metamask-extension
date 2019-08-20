@@ -55,6 +55,7 @@ const selectors = {
   getPermissionsRequests,
   getPermissionsDescriptions,
   getSiteMetadata,
+  getActiveTab,
   getMetaMetricState,
   getRpcPrefsForCurrentProvider,
   getKnownMethodData,
@@ -356,6 +357,10 @@ function getPermissionsRequests (state) {
 
 function getSiteMetadata (state) {
   return state.metamask.siteMetadata
+}
+
+function getActiveTab (state) {
+  return state.activeTab
 }
 
 function getMetaMetricState (state) {

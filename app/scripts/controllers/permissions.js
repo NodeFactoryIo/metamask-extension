@@ -3,7 +3,7 @@ const asMiddleware = require('json-rpc-engine/src/asMiddleware')
 const createAsyncMiddleware = require('json-rpc-engine/src/createAsyncMiddleware')
 const ObservableStore = require('obs-store')
 const RpcCap = require('json-rpc-capabilities-middleware').CapabilitiesController
-const { rpcErrors } = require('eth-json-rpc-errors')
+const { errors: rpcErrors } = require('eth-json-rpc-errors')
 
 // Methods that do not require any permissions to use:
 const SAFE_METHODS = require('../lib/permissions-safe-methods.json')
@@ -76,14 +76,16 @@ class PermissionsController {
     })
   }
 
-  // TODO:lps:review see initializeProvider() in metamask-controller for why this
-  // method exists
   /**
    * Returns the accounts that should be exposed for the given origin domain,
-   * if any.
+   * if any. This method exists for when a trusted context needs to know
+   * which accounts are exposed to a given domain.
+   * 
+   * Do not use in untrusted contexts; just send an RPC request.
+   * 
    * @param {string} origin
    */
-  async getAccounts (origin) {
+  getAccounts (origin) {
     return new Promise((resolve, _) => {
       const req = { method: 'eth_accounts' }
       const res = {}
