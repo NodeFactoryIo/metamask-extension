@@ -15,9 +15,8 @@ class SplitPaymentsController {
       this.address = ethUtil.toChecksumAddress(address);
     }
 
-    console.log("Received init state is: ", opts.initState);
-
     const initState = {
+      readNotifications: [],
       ...opts.initState,
       pendingRequestedTxs: [],
     };
@@ -52,7 +51,7 @@ class SplitPaymentsController {
       from: this.address,
     });
     // Set as read notification
-    this.setAsRead(payment);
+    // this.setAsRead(payment);
   }
 
   async init() {
@@ -77,12 +76,21 @@ class SplitPaymentsController {
 
   async loadPendingPaymentRequests() {
     const all = await SplitWallet.getAllPaymentRequests(this.address);
-    const store = this.store.getState();
-    console.log("store in loadPendingPaymentRequests is: ", store);
+    const readNotifications = this.store.getState().readNotifications;
 
+    const filtered = [];
     all.map((notification) => {
+      let isRead = false;
+      for (let i = 0; i < readNotifications.length; i++) {
+        if (JSON.stringify(notification) === JSON.stringify(readNotifications[i])) {
+          isRead = true;
+          break;
+        }
+      }
+      if (!isRead) filtered.push(notification);
+    });
 
-    })
+    return filtered;
   }
 }
 

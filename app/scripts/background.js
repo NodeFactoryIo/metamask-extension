@@ -180,6 +180,7 @@ async function loadStateFromPersistence () {
                   diskStore.getState() ||
                   migrator.generateInitialState(firstTimeState)
 
+  console.log("versionedData: ", versionedData);
   // check if somehow state is empty
   // this should never happen but new error reporting suggests that it has
   // for a small number of users
