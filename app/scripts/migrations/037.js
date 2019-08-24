@@ -25,5 +25,6 @@ function transformState (state) {
   // transform state here
   newState.SplitNetworkController = {};
   newState.SplitNetworkController.readNotifications = [];
+  // TODO: Possible to remove when 3box integrates additional features.
   return newState;
 }

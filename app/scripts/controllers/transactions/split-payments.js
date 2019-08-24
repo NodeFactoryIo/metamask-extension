@@ -5,19 +5,32 @@ const ethUtil = require('ethereumjs-util')
 
 class SplitPaymentsController {
   constructor(opts = {}) {
-    const { getSelectedAddress, platform, newUnapprovedTransaction } = opts;
+    const { getSelectedAddress, platform, newUnapprovedTransaction, keyringController } = opts;
 
     this.platform = platform;
+    this.keyringController = keyringController;
     this.newUnapprovedTransaction = newUnapprovedTransaction;
-    this.address = ethUtil.toChecksumAddress(getSelectedAddress());
-    this.splitWallet = new SplitWallet(this.address);
+    const address = getSelectedAddress();
+    if (address) {
+      this.address = ethUtil.toChecksumAddress(address);
+    }
+
+    console.log("Received init state is: ", opts.initState);
 
     const initState = {
+      ...opts.initState,
       pendingRequestedTxs: [],
     };
+
     this.store = new ObservableStore(initState)
 
     this.init();
+  }
+
+  setAsRead(notification) {
+    const store = this.store.getState();
+    console.log("store in setAsRead is: ", store);
+    store.putState(store.readNotifications.push(notification));
   }
 
   async onNewPaymentRequest(payment) {
@@ -38,10 +51,16 @@ class SplitPaymentsController {
       to: from,
       from: this.address,
     });
+    // Set as read notification
+    this.setAsRead(payment);
   }
 
   async init() {
-    // todo: load from storage previous ones
+    if (!this.address) {
+      const accounts = await this.keyringController.getAccounts()
+      this.address = accounts[0]
+    }
+    this.splitWallet = new SplitWallet(this.address);
 
     console.log(`Going to load pending payment requests for address ${this.address}...`);
     const pending = await this.loadPendingPaymentRequests();
@@ -57,7 +76,13 @@ class SplitPaymentsController {
   }
 
   async loadPendingPaymentRequests() {
-    return await SplitWallet.getAllPaymentRequests(this.address);
+    const all = await SplitWallet.getAllPaymentRequests(this.address);
+    const store = this.store.getState();
+    console.log("store in loadPendingPaymentRequests is: ", store);
+
+    all.map((notification) => {
+
+    })
   }
 }
 

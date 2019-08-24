@@ -246,10 +246,13 @@ module.exports = class MetamaskController extends EventEmitter {
     })
 
     // split network controller
+    console.log("initState", initState);
     this.splitNetworkController = new SplitPaymentsController({
+      initState: initState.SplitNetworkController,
       getSelectedAddress: this.preferencesController.getSelectedAddress.bind(this.preferencesController),
       platform: this.platform,
       newUnapprovedTransaction: this.txController.newUnapprovedTransaction.bind(this.txController),
+      keyringController: this.keyringController,
     });
 
     this.networkController.on('networkDidChange', () => {
@@ -319,7 +322,7 @@ module.exports = class MetamaskController extends EventEmitter {
       // ThreeBoxController
       ThreeBoxController: this.threeBoxController.store,
       // SplitNetworkController
-      SplitPaymentsController: this.splitNetworkController.store,
+      SplitNetworkController: this.splitNetworkController.store,
     })
     this.memStore.subscribe(this.sendUpdate.bind(this))
   }
