@@ -72,7 +72,7 @@ class ThreeBoxController {
   static async getAddressName(address) {
     try {
       const profile = await Box.getProfile(address);
-      return profile.name;
+      return profile.name || address;
     } catch (error) {
       console.error(error)
     }

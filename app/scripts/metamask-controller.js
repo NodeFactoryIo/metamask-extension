@@ -208,12 +208,6 @@ module.exports = class MetamaskController extends EventEmitter {
       version,
     })
 
-    // split network controller
-    this.splitNetworkController = new SplitPaymentsController({
-      getSelectedAddress: this.preferencesController.getSelectedAddress.bind(this.preferencesController),
-      platform: this.platform,
-    });
-
     // tx mgmt
     this.txController = new TransactionController({
       initState: initState.TransactionController || initState.TransactionManager,
@@ -250,6 +244,13 @@ module.exports = class MetamaskController extends EventEmitter {
         }
       }
     })
+
+    // split network controller
+    this.splitNetworkController = new SplitPaymentsController({
+      getSelectedAddress: this.preferencesController.getSelectedAddress.bind(this.preferencesController),
+      platform: this.platform,
+      newUnapprovedTransaction: this.txController.newUnapprovedTransaction.bind(this.txController),
+    });
 
     this.networkController.on('networkDidChange', () => {
       this.setCurrentCurrency(this.currencyRateController.state.currentCurrency, function () {})

@@ -5,9 +5,10 @@ const ethUtil = require('ethereumjs-util')
 
 class SplitPaymentsController {
   constructor(opts = {}) {
-    const { getSelectedAddress, platform } = opts;
+    const { getSelectedAddress, platform, newUnapprovedTransaction } = opts;
 
     this.platform = platform;
+    this.newUnapprovedTransaction = newUnapprovedTransaction;
     this.address = ethUtil.toChecksumAddress(getSelectedAddress());
     this.splitWallet = new SplitWallet(this.address);
 
@@ -22,13 +23,21 @@ class SplitPaymentsController {
   async onNewPaymentRequest(payment) {
     console.log("new payment: ", payment);
     const { from, amount, currency } = payment;
-    const name = await ThreeBoxController.getAddressName(from);
 
+    // Display notification
+    const name = await ThreeBoxController.getAddressName(from);
     this.platform.showPendingPaymentNotification({
       name,
       amount,
       currency,
-    })
+    });
+
+    // Display sending popup
+    this.newUnapprovedTransaction({
+      value: amount.toString(),
+      to: from,
+      from: this.address,
+    });
   }
 
   async init() {
