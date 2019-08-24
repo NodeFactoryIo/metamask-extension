@@ -29,7 +29,6 @@
   "background": {
     "scripts": [
       "chromereload.js",
-      "bg-libs.js",
       "background.js"
     ],
     "persistent": true
