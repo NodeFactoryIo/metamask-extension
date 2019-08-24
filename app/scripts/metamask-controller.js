@@ -3,7 +3,6 @@
  * @copyright Copyright (c) 2018 MetaMask
  * @license   MIT
  */
-
 const EventEmitter = require('events')
 const pump = require('pump')
 const Dnode = require('dnode')
@@ -64,6 +63,7 @@ const {
   PhishingController,
 } = require('gaba')
 const backEndMetaMetricsEvent = require('./lib/backend-metametrics')
+const SplitPaymentsController = require('./controllers/transactions/split-payments');
 
 module.exports = class MetamaskController extends EventEmitter {
 
@@ -152,6 +152,11 @@ module.exports = class MetamaskController extends EventEmitter {
       blockTracker: this.blockTracker,
       network: this.networkController,
     })
+
+    // split network controller
+    this.splitNetworkController = new SplitPaymentsController({
+      getSelectedAddress: this.preferencesController.getSelectedAddress.bind(this.preferencesController),
+    });
 
     // start and stop polling for balances based on activeControllerConnections
     this.on('controllerConnectionChanged', (activeControllerConnections) => {
@@ -434,6 +439,7 @@ module.exports = class MetamaskController extends EventEmitter {
     const providerApprovalController = this.providerApprovalController
     const onboardingController = this.onboardingController
     const threeBoxController = this.threeBoxController
+    const splitNetworkController = this.splitNetworkController
 
     return {
       // etc
@@ -547,6 +553,9 @@ module.exports = class MetamaskController extends EventEmitter {
       getThreeBoxLastUpdated: nodeify(threeBoxController.getLastUpdated, threeBoxController),
       turnThreeBoxSyncingOn: nodeify(threeBoxController.turnThreeBoxSyncingOn, threeBoxController),
       initializeThreeBox: nodeify(this.initializeThreeBox, this),
+
+      // Split network payments
+      loadPendingPaymentRequests: nodeify(splitNetworkController.loadPendingPaymentRequests, splitNetworkController),
     }
   }
 
