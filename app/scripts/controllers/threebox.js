@@ -69,6 +69,15 @@ class ThreeBoxController {
     }
   }
 
+  static async getAddressName(address) {
+    try {
+      const profile = await Box.getProfile(address);
+      return profile.name;
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async _update3Box ({ type }, newState) {
     try {
       const { threeBoxSyncingAllowed, threeBoxSynced } = this.store.getState()

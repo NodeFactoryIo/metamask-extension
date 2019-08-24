@@ -14,7 +14,7 @@ const asStream = require('obs-store/lib/asStream')
 const AccountTracker = require('./lib/account-tracker')
 const RpcEngine = require('json-rpc-engine')
 const debounce = require('debounce')
-const createEngineStreamx = require('json-rpc-middleware-stream/engineStream')
+const createEngineStream = require('json-rpc-middleware-stream/engineStream')
 const createFilterMiddleware = require('eth-json-rpc-filters')
 const createSubscriptionManager = require('eth-json-rpc-filters/subscriptionManager')
 const createOriginMiddleware = require('./lib/createOriginMiddleware')
@@ -211,6 +211,7 @@ module.exports = class MetamaskController extends EventEmitter {
     // split network controller
     this.splitNetworkController = new SplitPaymentsController({
       getSelectedAddress: this.preferencesController.getSelectedAddress.bind(this.preferencesController),
+      platform: this.platform,
     });
 
     // tx mgmt

@@ -1,12 +1,14 @@
 import { SplitWallet } from '@nodefactory/split-payment-sdk';
+const ThreeBoxController = require('../threebox');
 const ObservableStore = require('obs-store')
 const ethUtil = require('ethereumjs-util')
 
 class SplitPaymentsController {
   constructor(opts = {}) {
-    const { getSelectedAddress } = opts;
+    const { getSelectedAddress, platform } = opts;
 
-    this.address = getSelectedAddress();
+    this.platform = platform;
+    this.address = ethUtil.toChecksumAddress(getSelectedAddress());
     this.splitWallet = new SplitWallet(this.address);
 
     const initState = {
@@ -17,8 +19,16 @@ class SplitPaymentsController {
     this.init();
   }
 
-  onNewPaymentRequest(payment) {
+  async onNewPaymentRequest(payment) {
     console.log("new payment: ", payment);
+    const { from, amount, currency } = payment;
+    const name = await ThreeBoxController.getAddressName(from);
+
+    this.platform.showPendingPaymentNotification({
+      name,
+      amount,
+      currency,
+    })
   }
 
   async init() {
@@ -31,14 +41,14 @@ class SplitPaymentsController {
       pendingRequestedTxs: pending,
     });
 
-    this.splitWallet.onNewPaymentRequest(this.onNewPaymentRequest);
+    const onRequest = this.onNewPaymentRequest.bind(this);
+    this.splitWallet.onNewPaymentRequest(onRequest);
     console.log("Going to start polling...");
     this.splitWallet.startPolling();
   }
 
   async loadPendingPaymentRequests() {
-    const checksummedAddress = ethUtil.toChecksumAddress(this.address);
-    return await SplitWallet.getAllPaymentRequests(checksummedAddress);
+    return await SplitWallet.getAllPaymentRequests(this.address);
   }
 }
 

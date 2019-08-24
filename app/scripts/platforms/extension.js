@@ -66,6 +66,14 @@ class ExtensionPlatform {
     }
   }
 
+  showPendingPaymentNotification(txMeta) {
+    const title = "Payment requested";
+    const { name, amount, currency } = txMeta;
+    const message = `${name} has requested ${amount} ${currency} from you.`;
+
+    this._showNotification(title, message)
+  }
+
   _showConfirmedTransaction (txMeta) {
 
     this._subscribeToNotificationClicked()
