@@ -37,6 +37,32 @@
     tweetnacl "^1.0.1"
     tweetnacl-util "^0.15.0"
 
+"3box@^1.10.7":
+  version "1.10.7"
+  resolved "https://registry.yarnpkg.com/3box/-/3box-1.10.7.tgz#f7911acc554b40f7f02b25334f03338fac3adf5a"
+  integrity sha512-oQp12I5nydyjXB9SUGEMtI2bCcx80ZSLLLjp6zv50USz6kvnm+nGt75743grdIEwkluD7GADuZ9VA0jh5UaclQ==
+  dependencies:
+    "3box-orbitdb-plugins" "^1.0.5"
+    "3id-resolver" "^0.0.5"
+    "@babel/runtime" "^7.4.5"
+    did-jwt "^0.2.0"
+    ethers "^4.0.28"
+    events "^3.0.0"
+    graphql-request "^1.8.2"
+    https-did-resolver "^0.1.0"
+    ipfs "^0.36.3"
+    ipfs-did-document "^1.2.3"
+    ipfs-mini "^1.1.5"
+    ipfs-postmsg-proxy "^3.1.1"
+    js-sha256 "^0.9.0"
+    muport-did-resolver "^0.3.0"
+    node-fetch "^2.6.0"
+    orbit-db "^0.21.4"
+    orbit-db-cache-postmsg-proxy "^0.1.1"
+    store "^2.0.12"
+    tweetnacl "^1.0.1"
+    tweetnacl-util "^0.15.0"
+
 "3id-resolver@^0.0.5":
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/3id-resolver/-/3id-resolver-0.0.5.tgz#a5256bce32ac40842223922f715bd0c527199473"
@@ -1812,6 +1838,14 @@
   dependencies:
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
+
+"@nodefactory/split-paymanet-sdk@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@nodefactory/split-paymanet-sdk/-/split-paymanet-sdk-1.0.0.tgz#f2192ff7201a68d369afe30ab6f0f4c7c27a73de"
+  integrity sha512-tc3NjZw4LoiLxSWqiuTanZ8RDa3QCAiGmJnsV+BR/QgryJhjp3tcKORnlva7U+76TGgFLMHmmhFbCgZnnoUjCQ==
+  dependencies:
+    "3box" "^1.10.7"
+    sha.js "^2.4.11"
 
 "@nodelib/fs.stat@^1.1.2":
   version "1.1.3"
@@ -23001,6 +23035,14 @@ sha.js@^2.4.0, sha.js@^2.4.8, sha.js@~2.4.4:
   version "2.4.9"
   resolved "https://registry.yarnpkg.com/sha.js/-/sha.js-2.4.9.tgz#98f64880474b74f4a38b8da9d3c0f2d104633e7d"
   integrity sha512-G8zektVqbiPHrylgew9Zg1VRB1L/DtXNUVAM6q4QLy8NE3qtHlFXTf8VLL4k1Yl6c7NMjtZUTdXV+X44nFaT6A==
+  dependencies:
+    inherits "^2.0.1"
+    safe-buffer "^5.0.1"
+
+sha.js@^2.4.11:
+  version "2.4.11"
+  resolved "https://registry.yarnpkg.com/sha.js/-/sha.js-2.4.11.tgz#37a5cf0b81ecbc6943de109ba2960d1b26584ae7"
+  integrity sha512-QMEp5B7cftE7APOjk5Y6xgrbWu+WkLVQwk8JNjZ8nKRciZaByEW6MubieAiToS7+dwvrjGhH8jRXz3MVd0AYqQ==
   dependencies:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
