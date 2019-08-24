@@ -152,11 +152,6 @@ module.exports = class MetamaskController extends EventEmitter {
       network: this.networkController,
     })
 
-    // split network controller
-    this.splitNetworkController = new SplitPaymentsController({
-      getSelectedAddress: this.preferencesController.getSelectedAddress.bind(this.preferencesController),
-    });
-
     // start and stop polling for balances based on activeControllerConnections
     this.on('controllerConnectionChanged', (activeControllerConnections) => {
       if (activeControllerConnections > 0) {
@@ -212,6 +207,11 @@ module.exports = class MetamaskController extends EventEmitter {
       getSelectedAddress: this.preferencesController.getSelectedAddress.bind(this.preferencesController),
       version,
     })
+
+    // split network controller
+    this.splitNetworkController = new SplitPaymentsController({
+      getSelectedAddress: this.preferencesController.getSelectedAddress.bind(this.preferencesController),
+    });
 
     // tx mgmt
     this.txController = new TransactionController({
@@ -432,7 +432,7 @@ module.exports = class MetamaskController extends EventEmitter {
     const providerApprovalController = this.providerApprovalController
     const onboardingController = this.onboardingController
     const threeBoxController = this.threeBoxController
-    const splitNetworkController = this.splitNetworkController
+    // const splitNetworkController = this.splitNetworkController
 
     return {
       // etc
@@ -548,7 +548,6 @@ module.exports = class MetamaskController extends EventEmitter {
       initializeThreeBox: nodeify(this.initializeThreeBox, this),
 
       // Split network payments
-      // loadPendingPaymentRequests: nodeify(splitNetworkController.loadPendingPaymentRequests, splitNetworkController),
     }
   }
 

@@ -222,6 +222,7 @@ gulp.task('manifest:dev', function () {
   return gulp.src([
     './dist/firefox/manifest.json',
     './dist/chrome/manifest.json',
+    './dist/brave/manifest.json',
   ], {base: './dist/'})
 
     .pipe(jsoneditor(function (json) {
@@ -590,7 +591,7 @@ function bundleTask (opts) {
 
     // process bundles
     buildStream = buildStream
-      // convert bundle stream to gulp vinyl stream
+    // convert bundle stream to gulp vinyl stream
       .pipe(source(opts.filename))
       // buffer file contents (?)
       .pipe(buffer())
@@ -598,7 +599,7 @@ function bundleTask (opts) {
     // Initialize Source Maps
     if (opts.buildSourceMaps) {
       buildStream = buildStream
-        // loads map from browserify file
+      // loads map from browserify file
         .pipe(sourcemaps.init({ loadMaps: true }))
     }
 
