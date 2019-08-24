@@ -102,9 +102,11 @@ class ThreeBoxController {
   async new3Box (address) {
     if (this.getThreeBoxSyncingState()) {
       this.store.updateState({ threeBoxSynced: false })
-      this.address = await this.keyringController.getAppKeyAddress(address, {
-        withAppKeyOrigin: '3box.metamask.io',
-      })
+      // this.address = await this.keyringController.getAppKeyAddress(address, {
+      //   withAppKeyOrigin: '3box.metamask.io',
+      // })
+      const accounts = await this.keyringController.getAccounts()
+      this.address = accounts[0]
 
       let timedOut = false
       const syncTimeout = setTimeout(() => {

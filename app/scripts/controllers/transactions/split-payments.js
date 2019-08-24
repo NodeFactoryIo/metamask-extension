@@ -1,5 +1,6 @@
 import { SplitWallet } from '@nodefactory/split-payment-sdk';
 const ObservableStore = require('obs-store')
+const ethUtil = require('ethereumjs-util')
 
 class SplitPaymentsController {
   constructor(opts = {}) {
@@ -17,14 +18,15 @@ class SplitPaymentsController {
   }
 
   onNewPaymentRequest(payment) {
-    console.log(payment);
+    console.log("new payment: ", payment);
   }
 
   async init() {
     // todo: load from storage previous ones
 
-    console.log("Going to load pending payment requests...");
+    console.log(`Going to load pending payment requests for address ${this.address}...`);
     const pending = await this.loadPendingPaymentRequests();
+    console.log("pending are: ", pending);
     this.store.updateState({
       pendingRequestedTxs: pending,
     });
@@ -35,7 +37,8 @@ class SplitPaymentsController {
   }
 
   async loadPendingPaymentRequests() {
-    return SplitWallet.getAllPaymentRequests(this.address);
+    const checksummedAddress = ethUtil.toChecksumAddress(this.address);
+    return await SplitWallet.getAllPaymentRequests(checksummedAddress);
   }
 }
 
