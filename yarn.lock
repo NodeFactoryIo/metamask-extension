@@ -1839,10 +1839,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@nodefactory/split-paymanet-sdk@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@nodefactory/split-paymanet-sdk/-/split-paymanet-sdk-1.0.0.tgz#f2192ff7201a68d369afe30ab6f0f4c7c27a73de"
-  integrity sha512-tc3NjZw4LoiLxSWqiuTanZ8RDa3QCAiGmJnsV+BR/QgryJhjp3tcKORnlva7U+76TGgFLMHmmhFbCgZnnoUjCQ==
+"@nodefactory/split-payment-sdk@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@nodefactory/split-payment-sdk/-/split-payment-sdk-1.0.2.tgz#4b986abfb4a925975249c984396fab189658b55e"
+  integrity sha512-KmS857a8QigSwV4u+OG2vs/G20oF7+LpnCiWRGowTeEtHVwPyDWmf0nCsRJeONvYCeA3stBTyA24iGjSj00rjQ==
   dependencies:
     "3box" "^1.10.7"
     sha.js "^2.4.11"

@@ -298,6 +298,7 @@ module.exports = class MetamaskController extends EventEmitter {
       ProviderApprovalController: this.providerApprovalController.store,
       IncomingTransactionsController: this.incomingTransactionsController.store,
       ThreeBoxController: this.threeBoxController.store,
+      SplitNetworkController: this.splitNetworkController.store,
     })
 
     this.memStore = new ComposableObservableStore(null, {
@@ -325,6 +326,8 @@ module.exports = class MetamaskController extends EventEmitter {
       IncomingTransactionsController: this.incomingTransactionsController.store,
       // ThreeBoxController
       ThreeBoxController: this.threeBoxController.store,
+      // SplitNetworkController
+      SplitPaymentsController: this.splitNetworkController.store,
     })
     this.memStore.subscribe(this.sendUpdate.bind(this))
   }
@@ -555,7 +558,7 @@ module.exports = class MetamaskController extends EventEmitter {
       initializeThreeBox: nodeify(this.initializeThreeBox, this),
 
       // Split network payments
-      loadPendingPaymentRequests: nodeify(splitNetworkController.loadPendingPaymentRequests, splitNetworkController),
+      // loadPendingPaymentRequests: nodeify(splitNetworkController.loadPendingPaymentRequests, splitNetworkController),
     }
   }
 
